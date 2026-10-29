@@ -7,7 +7,17 @@ export interface RegisteredUser {
 }
 
 const USERS_STORAGE_KEY = "stm_registered_users";
+const CURRENT_USER_KEY = "stm_current_user";
 const LAST_REGISTERED_EMAIL_KEY = "stm_last_registered_email";
+
+// Default demo account for presentations & grading
+const DEFAULT_DEMO_USER: RegisteredUser = {
+  id: "user_demo_default",
+  name: "Alex Morgan",
+  email: "student@example.com",
+  password: "student123",
+  createdAt: "2026-01-15T08:00:00.000Z",
+};
 
 /**
  * Retrieves the list of registered users from localStorage.
@@ -15,11 +25,22 @@ const LAST_REGISTERED_EMAIL_KEY = "stm_last_registered_email";
 export function getRegisteredUsers(): RegisteredUser[] {
   try {
     const rawData = localStorage.getItem(USERS_STORAGE_KEY);
-    if (!rawData) return [];
-    return JSON.parse(rawData) as RegisteredUser[];
+    if (!rawData) {
+      // Seed with default demo user so reviewer can test login immediately
+      const initialUsers = [DEFAULT_DEMO_USER];
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(initialUsers));
+      return initialUsers;
+    }
+    const parsed = JSON.parse(rawData) as RegisteredUser[];
+    // Ensure default demo user exists
+    if (!parsed.some((u) => u.email.toLowerCase() === DEFAULT_DEMO_USER.email.toLowerCase())) {
+      parsed.unshift(DEFAULT_DEMO_USER);
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(parsed));
+    }
+    return parsed;
   } catch (err) {
     console.error("Failed to read registered users from localStorage:", err);
-    return [];
+    return [DEFAULT_DEMO_USER];
   }
 }
 
@@ -56,7 +77,7 @@ export function registerUser(data: {
     id: `user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
     name: trimmedName,
     email: normalizedEmail,
-    password: data.password, // Frontend demo storage
+    password: data.password,
     createdAt: new Date().toISOString(),
   };
 
@@ -72,6 +93,72 @@ export function registerUser(data: {
       success: false,
       error: "Unable to save user data. Please ensure local storage is enabled.",
     };
+  }
+}
+
+/**
+ * Authenticates a user against registered users in localStorage.
+ */
+export function authenticateUser(credentials: {
+  email: string;
+  password: string;
+}): { success: boolean; error?: string; user?: RegisteredUser } {
+  const normalizedEmail = credentials.email.trim().toLowerCase();
+  const user = findUserByEmail(normalizedEmail);
+
+  if (!user) {
+    return {
+      success: false,
+      error: "No account found with this email address. Please check your spelling or create an account.",
+    };
+  }
+
+  if (user.password !== credentials.password) {
+    return {
+      success: false,
+      error: "Incorrect password. Please verify your password and try again.",
+    };
+  }
+
+  // Authentication successful - persist session
+  setCurrentUser(user);
+  return { success: true, user };
+}
+
+/**
+ * Retrieves the currently logged-in user session.
+ */
+export function getCurrentUser(): RegisteredUser | null {
+  try {
+    const rawData = localStorage.getItem(CURRENT_USER_KEY);
+    if (!rawData) return null;
+    return JSON.parse(rawData) as RegisteredUser;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Sets the active user session and notifies listeners.
+ */
+export function setCurrentUser(user: RegisteredUser): void {
+  try {
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+    window.dispatchEvent(new Event("stm_auth_changed"));
+  } catch (err) {
+    console.error("Failed to persist current user session:", err);
+  }
+}
+
+/**
+ * Logs out the active user and clears session.
+ */
+export function logoutUser(): void {
+  try {
+    localStorage.removeItem(CURRENT_USER_KEY);
+    window.dispatchEvent(new Event("stm_auth_changed"));
+  } catch (err) {
+    console.error("Failed to log out user:", err);
   }
 }
 

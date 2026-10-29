@@ -26,11 +26,12 @@ npm run build
 - Responsive homepage: STM-13 (Tejas; coordinate visual design with Harsh).
 - Registration form: STM-6 (UI by Tejas) & STM-7 (implementation and validation by Thalesh — completed).
 - Registration test plan: `docs/STM-7-REGISTRATION-TEST-PLAN.md`.
-- Login form UI: STM-9 (Tejas; authentication belongs to Thalesh in STM-10).
+- Login form & authentication: STM-9 (UI by Tejas) & STM-10 (authentication, validation, session, and protected dashboard by Thalesh — completed).
+- Authentication test plan: `docs/STM-10-AUTHENTICATION-TEST-PLAN.md`.
 - Contact page placeholder: to be replaced/integrated after Harsh completes STM-16.
 - Contact form test plan: `docs/STM-17-CONTACT-FORM-TEST-PLAN.md`.
 
-This is a frontend scaffold, not a production-ready application. Authentication and contact form submission are not yet implemented.
+This is a frontend demonstration application with client-side user registration, authentication, session persistence, and protected task dashboard. Contact form submission backend is pending STM-16.
 
 ## Team boundaries
 

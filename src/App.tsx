@@ -1,8 +1,12 @@
-import { NavLink, Route, Routes } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import ContactPage from "./pages/ContactPage";
+import DashboardPage from "./pages/DashboardPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { getCurrentUser, logoutUser, type RegisteredUser } from "./utils/userStorage";
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
   `rounded-lg px-3 py-2 text-sm font-medium transition ${
@@ -10,6 +14,22 @@ const navClass = ({ isActive }: { isActive: boolean }) =>
   }`;
 
 export default function App() {
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState<RegisteredUser | null>(getCurrentUser());
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      setCurrentUser(getCurrentUser());
+    };
+    window.addEventListener("stm_auth_changed", handleAuthChange);
+    return () => window.removeEventListener("stm_auth_changed", handleAuthChange);
+  }, []);
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/login");
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <header className="border-b border-slate-200 bg-white">
@@ -24,8 +44,27 @@ export default function App() {
           <nav className="flex flex-wrap items-center gap-1" aria-label="Main navigation">
             <NavLink to="/" end className={navClass}>Home</NavLink>
             <NavLink to="/contact" className={navClass}>Contact</NavLink>
-            <NavLink to="/login" className={navClass}>Log in</NavLink>
-            <NavLink to="/register" className="ml-1 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">Get started</NavLink>
+            {currentUser ? (
+              <>
+                <NavLink to="/dashboard" className={navClass}>Dashboard</NavLink>
+                <div className="ml-2 flex items-center gap-2">
+                  <span className="hidden text-xs font-semibold text-slate-600 sm:inline">
+                    {currentUser.name}
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                  >
+                    Log out
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <NavLink to="/login" className={navClass}>Log in</NavLink>
+                <NavLink to="/register" className="ml-1 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">Get started</NavLink>
+              </>
+            )}
           </nav>
         </div>
       </header>
@@ -36,6 +75,14 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<div className="mx-auto max-w-3xl px-4 py-20 text-center"><h1 className="text-2xl font-bold">Page not found</h1><p className="mt-2 text-slate-600">The page you requested does not exist.</p><NavLink className="mt-5 inline-block font-semibold text-blue-700" to="/">Return home</NavLink></div>} />
         </Routes>
       </main>
