@@ -37,7 +37,7 @@ export default function ContactPage() {
               </span>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-blue-200">Email Us</p>
-                <p className="mt-0.5 text-sm font-medium">support@studentaskmanager.edu</p>
+                <p className="mt-0.5 text-sm font-medium">yourMailid@jainuniversity.ac.in</p>
               </div>
             </div>
 
