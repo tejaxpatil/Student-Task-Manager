@@ -9,7 +9,7 @@ Project: Student Task Manager (STM), Sprint 1.
 - STM-17: Test contact form submission and validation after Harsh's implementation is available.
 
 ## Thalesh — teammate-owned work
-- STM-7: Implement registration and input validation.
+- STM-7: Implement registration and input validation (Completed — see `docs/STM-7-REGISTRATION-TEST-PLAN.md`).
 - STM-10: Implement authentication and validation.
 - STM-14: Test homepage responsiveness.
 

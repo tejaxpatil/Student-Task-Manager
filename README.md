@@ -24,7 +24,8 @@ npm run build
 ## Current scope
 
 - Responsive homepage: STM-13 (Tejas; coordinate visual design with Harsh).
-- Registration form UI: STM-6 (Tejas; implementation/validation belongs to Thalesh in STM-7).
+- Registration form: STM-6 (UI by Tejas) & STM-7 (implementation and validation by Thalesh — completed).
+- Registration test plan: `docs/STM-7-REGISTRATION-TEST-PLAN.md`.
 - Login form UI: STM-9 (Tejas; authentication belongs to Thalesh in STM-10).
 - Contact page placeholder: to be replaced/integrated after Harsh completes STM-16.
 - Contact form test plan: `docs/STM-17-CONTACT-FORM-TEST-PLAN.md`.
