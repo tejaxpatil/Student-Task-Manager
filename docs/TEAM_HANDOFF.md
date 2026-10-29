@@ -12,6 +12,7 @@ Project: Student Task Manager (STM), Sprint 1.
 - STM-7: Implement registration and input validation (Completed — see `docs/STM-7-REGISTRATION-TEST-PLAN.md`).
 - STM-10: Implement authentication and validation (Completed — see `docs/STM-10-AUTHENTICATION-TEST-PLAN.md`).
 - STM-14: Test homepage responsiveness (Completed — see `docs/STM-14-HOMEPAGE-RESPONSIVENESS-TEST-PLAN.md`).
+- STM-15: Design contact form UI and page layout (Completed — see `docs/STM-15-CONTACT-PAGE-UI-DESIGN.md`).
 
 ## Harsh Pillai — teammate-owned work
 - STM-12: Design homepage layout.
