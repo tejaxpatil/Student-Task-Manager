@@ -23,7 +23,8 @@ npm run build
 
 ## Current scope
 
-- Responsive homepage: STM-13 (Tejas; coordinate visual design with Harsh).
+- Responsive homepage: STM-12 (design by Harsh), STM-13 (implementation by Tejas), and STM-14 (responsiveness testing and verification by Thalesh — completed).
+- Homepage responsiveness test plan: `docs/STM-14-HOMEPAGE-RESPONSIVENESS-TEST-PLAN.md`.
 - Registration form: STM-6 (UI by Tejas) & STM-7 (implementation and validation by Thalesh — completed).
 - Registration test plan: `docs/STM-7-REGISTRATION-TEST-PLAN.md`.
 - Login form & authentication: STM-9 (UI by Tejas) & STM-10 (authentication, validation, session, and protected dashboard by Thalesh — completed).
