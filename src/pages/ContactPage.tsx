@@ -37,7 +37,7 @@ export default function ContactPage() {
               </span>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-blue-200">Email Us</p>
-                <p className="mt-0.5 text-sm font-medium">support@studenttaskmanager.edu</p>
+                <p className="mt-0.5 text-sm font-medium">support@studentaskmanager.edu</p>
               </div>
             </div>
 
@@ -47,7 +47,7 @@ export default function ContactPage() {
               </span>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-blue-200">Campus Office</p>
-                <p className="mt-0.5 text-sm font-medium">Computer Science Building, Lab 4</p>
+                <p className="mt-0.5 text-sm font-medium">Faculty Of Engineeirng(FET), 324 Lab</p>
               </div>
             </div>
 
@@ -57,7 +57,7 @@ export default function ContactPage() {
               </span>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-blue-200">Support Hours</p>
-                <p className="mt-0.5 text-sm font-medium">Mon – Fri: 9:00 AM – 5:00 PM</p>
+                <p className="mt-0.5 text-sm font-medium">Mon – Fri: 9:00 AM – 3:45 PM</p>
               </div>
             </div>
           </div>
